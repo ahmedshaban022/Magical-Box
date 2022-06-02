@@ -9,7 +9,7 @@ const randomNumber=()=>{
 
 
 
-///////////////////// Global Varibels ///////////////////////////////////////////////////////////
+///////////////////// Global ///////////////////////////////////////////////////////////
 
 const queue=new Queue();
 const stack=[];
@@ -25,7 +25,7 @@ const magicBox=(...bills)=>{
 
     
     if(bills.length===0){
-        if(stack.length===0 && queue.length===0){ // && priorityQueue.isEmpty
+        if(stack.length===0 && queue.length===0 && priorityQueue.isEmpty===true){ // && priorityQueue.isEmpty
             
             return "there is no bills";
         }
@@ -49,12 +49,15 @@ const magicBox=(...bills)=>{
                 return queue.dequeue();
             }
 
-            case 2: if(priorityQueue.length===1){
-                random=randomNumber();
-                return priorityQueue.dequeue();
-            }else{
-                return priorityQueue.dequeue().element;
-            }
+            case 2: 
+            let bill = priorityQueue.dequeue().element;
+            if(priorityQueue.isEmpty()==true){
+                    random=randomNumber();
+                }
+                return bill;
+            
+                // return priorityQueue.dequeue().element;
+            
             default:
                 return false;
         
@@ -94,10 +97,11 @@ const magicBox=(...bills)=>{
             break;
 
             case 2: //priority queue
-            writeOnTheFile('?'); // || writeOnTheFile('p');
+            writeOnTheFile('?'); //  writeOnTheFile('p');
 
             for(let i=0; i<validBills.length;i++){
-                priorityQueue.enqueue(validBills[i],i)
+                // priorityQueue.enqueue(validBills[i],i) 
+                priorityQueue.enqueue(validBills[i],randomNumber())
             }
            
             break;
@@ -118,7 +122,7 @@ const magicBox=(...bills)=>{
 
 
 }
-
+for(let i=0;i<10; i++){
 console.log(random,'Random');
 magicBox(1);
 magicBox(20,60,90);
@@ -128,14 +132,9 @@ console.log(magicBox());
 console.log(magicBox());
 console.log(magicBox());
 console.log(magicBox());
-
 console.log('****************************************************************');
-console.log(priorityQueue.printPQueue());
-console.log(priorityQueue.printPQueue().length);
 
-
-
-
+}
 
 
 
@@ -169,7 +168,13 @@ console.log(priorityQueue.printPQueue().length);
         
 function writeOnTheFile(content){
 
-    fs.writeFile('./Results.txt', content, err => {
+    // let fileData;
+    // fs.readFile("./Results.txt", "utf-8", (err, data) => {
+    //     if (err) { console.log(err) }
+    //     fileData=data || "";
+    // })
+    // fs.writeFile('./Results.txt', `${fileData}\r\n${content}`, err => {
+        fs.writeFile('./Results.txt', content, err => {
         if (err) {
             console.error(err);
         }
