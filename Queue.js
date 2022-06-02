@@ -16,31 +16,11 @@ class Queue {
       this.head++;
       return item;
     }
-    peek() {
-      return this.elements[this.head];
-    }
+
     get length() {
       return this.tail - this.head;
     }
-    get isEmpty() {
-      return this.length === 0;
-    }
+ 
   }
-//   let q=new Queue();
-//   q.enqueue(50);
-//   q.enqueue(10);
-//   q.enqueue(100);
-
-//   console.log(q.dequeue());
-//   console.log(q.dequeue());
-//   console.log(q.dequeue());
-// //   console.log(q.dequeue());
-//   console.log(q.isEmpty);
-//   q.enqueue(99);
-//   console.log(q.isEmpty);
-//   console.log(q.dequeue());
-//   console.log(q.isEmpty);
-//   q.enqueue("aas")
-//   console.log(q.isEmpty);
 
 module.exports=Queue

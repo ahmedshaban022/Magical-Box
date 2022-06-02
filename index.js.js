@@ -4,7 +4,16 @@ const Queue= require('./Queue');
 const fs = require('fs');
 
 const randomNumber=()=>{
-    return Math.floor(Math.random()*3)
+    let  random=Math.floor(Math.random()*3);
+    if(random===0){
+        writeOnTheFile('s');
+    }else if(random===1){
+        writeOnTheFile('q');
+    }
+    else if(random===2){
+        writeOnTheFile('?'); //  writeOnTheFile('p');
+    }
+    return random
 };
 
 
@@ -81,7 +90,7 @@ const magicBox=(...bills)=>{
         switch(random){
 
             case 0: //stack
-            writeOnTheFile('s');
+            
             for(let i=0; i<validBills.length;i++){
                 stack.push(validBills[i])
             }
@@ -89,7 +98,7 @@ const magicBox=(...bills)=>{
             break;
 
             case 1: //queue
-            writeOnTheFile('q');
+           
             for(let i=0; i<validBills.length;i++){
                 queue.enqueue(validBills[i]);
             }
@@ -97,11 +106,11 @@ const magicBox=(...bills)=>{
             break;
 
             case 2: //priority queue
-            writeOnTheFile('?'); //  writeOnTheFile('p');
+           
 
             for(let i=0; i<validBills.length;i++){
                 // priorityQueue.enqueue(validBills[i],i) 
-                priorityQueue.enqueue(validBills[i],randomNumber())
+                 priorityQueue.enqueue(validBills[i],Math.floor(Math.random()*10))
             }
            
             break;
@@ -115,15 +124,12 @@ const magicBox=(...bills)=>{
         
 
     }
-    // return validBills;
-
-
-
-
-
+  
 }
+
+
+
 for(let i=0;i<10; i++){
-console.log(random,'Random');
 magicBox(1);
 magicBox(20,60,90);
 magicBox(50,100);
@@ -132,53 +138,15 @@ console.log(magicBox());
 console.log(magicBox());
 console.log(magicBox());
 console.log(magicBox());
-console.log('****************************************************************');
+console.log('*'.repeat(50));
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-// let fileData=fs.readFile('./Results.txt', 'utf8', (err, data) => {
-//     if (err) {
-//       console.error(err);
-//       return;
-//     }
-//     console.log(data,'ee');
-//     return data;
-//   });
-//   let content = 'Some content!';
-//   if(fileData){
-    //       content=fileData+"testssss"
-    //   }else{
-        //     content='cant read'
-        //   }
-        //   console.log(fileData,'sss');
-
-
-
         
 function writeOnTheFile(content){
-
-    // let fileData;
-    // fs.readFile("./Results.txt", "utf-8", (err, data) => {
-    //     if (err) { console.log(err) }
-    //     fileData=data || "";
-    // })
-    // fs.writeFile('./Results.txt', `${fileData}\r\n${content}`, err => {
-        fs.writeFile('./Results.txt', content, err => {
-        if (err) {
-            console.error(err);
-        }
-
-        
-    });
+    fs.open('./Results.txt', 'a', 666, function( e, id ) {
+        fs.write( id, content + "\n", null, 'utf8', function(){
+         fs.close(id, function(){
+         });
+        });
+       });
 }
