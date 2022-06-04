@@ -6,12 +6,12 @@ const fs = require('fs');
 const randomNumber=()=>{
     let  random=Math.floor(Math.random()*3);
     if(random===0){
-        writeOnTheFile('s');
+     
     }else if(random===1){
-        writeOnTheFile('q');
+        
     }
     else if(random===2){
-        writeOnTheFile('?'); //  writeOnTheFile('p');
+        
     }
     return random
 };
@@ -82,7 +82,7 @@ const magicBox=(...bills)=>{
             return validValues.includes(bill)
         });
         if(validBills.length===0){
-            writeOnTheFile('!');
+           
             return 'the operation invalid';
         } 
 
@@ -128,20 +128,56 @@ const magicBox=(...bills)=>{
 }
 
 
+let inpArr=[1,3,50,20,90,100,20,56];
 
-for(let i=0;i<10; i++){
-magicBox(1);
-magicBox(20,60,90);
-magicBox(50,100);
+for(let i=0;i<inpArr.length; i++){
+magicBox(inpArr[i]);
+}
+let outArr=[];
+for(let i=0;i<inpArr.length; i++){
+    let bill=magicBox();
+    if(bill!==undefined){
+        console.log('Expelled bill id : ',bill);
 
-console.log(magicBox());
-console.log(magicBox());
-console.log(magicBox());
-console.log(magicBox());
-console.log('*'.repeat(50));
+        outArr.push(bill)
+    }
+   
+}
+
+whatDataStructureType(inpArr,outArr);
+
+
+function whatDataStructureType(inputArr=[],outputArr=[]){
+
+    if(inputArr.length===0||outputArr.length===0) {
+        writeOnTheFile('!');
+        return console.log("the operation invalid");
+    }
+
+    let validBills=inputArr.filter(bill=>{
+        return validValues.includes(bill)
+    });
+
+    let reversedArr=[...outputArr];
+    reversedArr.reverse();  
+    
+    
+     if(arraysMatch(validBills,outputArr)){
+        return writeOnTheFile('q')
+     }
+    
+    else if(arraysMatch(validBills,reversedArr)){
+        return writeOnTheFile('s')
+     }
+     else{
+        return writeOnTheFile('?') // writeOnTheFile('p');
+     }
+
+
 
 }
-        
+
+
 function writeOnTheFile(content){
     fs.open('./Results.txt', 'a', 666, function( e, id ) {
         fs.write( id, content + "\n", null, 'utf8', function(){
@@ -150,3 +186,16 @@ function writeOnTheFile(content){
         });
        });
 }
+
+
+function arraysMatch (arr1, arr2) {
+
+	if (arr1.length !== arr2.length) return false;
+
+	
+	for (let i = 0; i < arr1.length; i++) {
+		if (arr1[i] !== arr2[i]) return false;
+	}
+	return true;
+
+};
